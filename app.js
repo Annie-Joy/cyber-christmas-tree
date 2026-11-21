@@ -57,7 +57,7 @@ document.querySelectorAll('.swatch').forEach(b=>b.onclick=()=>{theme=b.dataset.t
 $('wishText').oninput=e=>$('wishDisplay').textContent=e.target.value||'愿每个平凡日子都闪闪发光';
 $('scatterBtn').onclick=()=>{targetSpread=targetSpread>.5?0:1;$('scatterBtn').querySelector('span').textContent=targetSpread?'聚合':'散开'};
 $('resetBtn').onclick=()=>{targetRot=.23;zoom=14.8;targetSpread=0;focused=null;updateFocus()};
-function updateFocus(){const box=$('photoFocus');box.classList.toggle('hidden',focused===null);if(focused!==null){$('focusImage').src=photos[focused].full;$('focusCounter').textContent=`${focused+1} / ${photos.length}`;box.style.setProperty('--focus-scale','1')}}
+function updateFocus(){const box=$('photoFocus');box.classList.toggle('hidden',focused===null);if(focused!==null){const photo=photos[focused];$('focusImage').src=photo.full;$('focusCounter').textContent=`${focused+1} / ${photos.length}`;$('focusOriginal').href=photo.full;$('focusOriginal').hidden=!photo.objectUrl;box.style.setProperty('--focus-scale','1')}}
 function focusPhoto(i){if(!photos.length)return;focused=i===focused?null:i;targetSpread=0;updateFocus();toast(focused===null?'回到圣诞树':`正在聚焦照片 ${i+1}`)}
 $('focusClose').onclick=()=>{focused=null;updateFocus()};$('focusPrev').onclick=()=>{focused=(focused-1+photos.length)%photos.length;updateFocus()};$('focusNext').onclick=()=>{focused=(focused+1)%photos.length;updateFocus()};
 const ray=new THREE.Raycaster(),pointer=new THREE.Vector2();let down=null,dragged=false,pinchDistance=0;
